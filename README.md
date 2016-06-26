@@ -11,9 +11,12 @@ Node
 npm
 
 # Installation
-`git clone` this repo
-`cd VideoPlayer` navigate to the main folder
-`npm i` to install the dependencies
-`npm start` to launch the app
-`node_modules/.bin/webpack` to generate a bundle file (minified, dependencies, ES5 translated...) 
+- `git clone` this repo
+- `cd VideoPlayer` navigate to the main folder 
+- `npm i` to install the dependencies
+- `npm start` to launch the app
+- `node_modules/.bin/webpack` to generate a bundle file (minified, dependencies, ES5 translated...) 
+
+# Notes
+- I used a [Chrome extension](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) to bypass the CORS problem, I tried and struggled a lot to replace the hostanme of the dev server.
 
