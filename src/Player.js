@@ -1,15 +1,30 @@
 import React, {Component,PropTypes} from 'react';
 
 export default class Player extends Component {
+  
   static propTypes = {
     src: PropTypes.string.isRequired
   };
+ constructor(props) {
+    super(props);
+ }
+  getInitialState(){
+    return {
+      src: ''
+    };
+  }
+  componentWillReceiveProps(){
+    this.setState({
+      src: this.props.src
+    });
+  }
+
   render() {
-    const {src, ...htmlTags} = this.props;
     return (
       <div>
-        <p>{src}</p>
-        <video controls webkitAllowFullScreen mozallowfullscreen allowFullScreen {...htmlTags} src={src}></video>
+        <p>{this.state.src}</p>
+        <video controls autoPlay webkitAllowFullScreen mozallowfullscreen allowFullScreen src={this.state.src}>
+        </video>
       </div>
     );
   }

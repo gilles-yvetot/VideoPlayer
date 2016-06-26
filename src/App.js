@@ -7,16 +7,16 @@ export default class App extends Component {
     super(props);
     this.state = {
       src: '',
-      account: 12795912,
-      event: 4581408
+      accountId: 1818635,
+      eventId: 4577843,
+      videoId: 106713251 
     };
     this.listPlaylist();
   }
   listPlaylist() {
-    if (this.state.account && this.state.event) {
-      let url = 'http://api.new.livestream.com/accounts/' + this.state.account + '/events/' + this.state.event + '/stream_info';
-      console.log(url)
-      // calling API to retrieve playlist from a channel
+    if (this.state.accountId && this.state.eventId && this.state.eventId) {
+      let url = `http://api.new.livestream.com/accounts/${this.state.accountId}/events/${this.state.eventId}/videos/${this.state.videoId}`;
+
       this.getCall(url, (json) => {
         console.log(json);
       }, (err) => {
@@ -25,22 +25,32 @@ export default class App extends Component {
     }
   }
   getCall(url, success, error) {
-    fetch('http://api.new.livestream.com/accounts/1818635/events/4577843/videos/106713251')
+      var self=this;
+      
+      fetch(url)
       .then(function (response) {
         return response.json()
       }).then(function (json) {
-        console.log('parsed json', json)
+        console.log('parsed json', json);
+        if(json.progressive_url){
+          console.log(json.progressive_url);
+          self.setState({src : json.progressive_url})
+        }
       }).catch(function (ex) {
         console.log('parsing failed', ex)
       })
   }
 
-  channelAccount(e) {
-    this.setState({ account: e.target.value });
+  accountChange(e) {
+    this.setState({ accountId: e.target.value });
     this.listPlaylist();
   }
   eventChange(e) {
-    this.setState({ event: e.target.value });
+    this.setState({ eventId: e.target.value });
+    this.listPlaylist();
+  }
+  videoChange(e) {
+    this.setState({ videoId: e.target.value });
     this.listPlaylist();
   }
 
@@ -49,9 +59,12 @@ export default class App extends Component {
     return (
       <div>
         <p>Enter an account name/id</p>
-        <input type='text' placeholder='Channel name' value={this.state.account} onChange={this.channelAccount.bind(this) } />
+        <input type='text' placeholder='Channel name' value={this.state.accountId} onChange={this.accountChange.bind(this) } />
         <p>Enter an event name/id</p>
-        <input type='text' placeholder='Event name' value={this.state.event} onChange={this.eventChange.bind(this) } />
+        <input type='text' placeholder='Event name' value={this.state.eventId} onChange={this.eventChange.bind(this) } />
+        <p>Enter an video id</p>
+        <input type='text' placeholder='Video Id' value={this.state.videoId} onChange={this.videoChange.bind(this) } />
+
         <Player src={this.state.src} width={500} height={270}></Player>
       </div>
     );
