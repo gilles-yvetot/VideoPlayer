@@ -22,7 +22,6 @@ export default class Player extends Component {
   render() {
     return (
       <div>
-        <p>{this.state.src}</p>
         <video controls autoPlay webkitAllowFullScreen mozallowfullscreen allowFullScreen src={this.state.src}>
         </video>
       </div>
