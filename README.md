@@ -17,6 +17,10 @@ I also think that React will become way more popular and used than Angular 2.
 - `npm start` to launch the app
 - `node_modules/.bin/webpack` to generate a bundle file (minified, dependencies, ES5 translated...) 
 
-### Notes
-- I used a [Chrome extension](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) to bypass the CORS problem, I tried and struggled a lot to replace the hostanme of the dev server.
+### Livestream API
+I did struggle with the Livestream API, because there is no documentation online and also because it is not a public API, 
+so I had to fight with CORS security, which I bypassed with a [Chrome extension](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+I did tried changing the hostname by modifying my local web server, but diving into webpack-dev-server config was too complexed for a beginner in React and not the purpose of this assignment.
+I also tried modifying directly my /etc/hosts file but once again it did not work. 
+
 

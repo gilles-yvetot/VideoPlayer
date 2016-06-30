@@ -16,10 +16,15 @@ export default class App extends Component {
   listPlaylist() {
     if (this.state.accountId && this.state.eventId && this.state.eventId) {
       let url = `http://api.new.livestream.com/accounts/${this.state.accountId}/events/${this.state.eventId}/videos/${this.state.videoId}`;
-
       this.getCall(url, (json) => {
-        console.log(json);
-      }, (err) => {
+        if(json.progressive_url){
+          this.setState({
+            src : json.progressive_url,
+            thumbnail : json.thumbnail_url
+          })
+        }
+      }, 
+      (err) => {
         console.error(err);
       })
     }
@@ -30,15 +35,9 @@ export default class App extends Component {
       fetch(url)
       .then(function (response) {
         return response.json()
-      }).then(function (json) {
-        console.log('parsed json', json);
-        if(json.progressive_url){
-          console.log(json.progressive_url);
-          self.setState({src : json.progressive_url})
-        }
-      }).catch(function (ex) {
-        console.log('parsing failed', ex)
       })
+      .then(success)
+      .catch(error)
   }
 
   accountChange(e) {
@@ -65,7 +64,7 @@ export default class App extends Component {
         <p>Enter an video id</p>
         <input type='text' placeholder='Video Id' value={this.state.videoId} onChange={this.videoChange.bind(this) } />
 
-        <Player src={this.state.src} width={500} height={270}></Player>
+        <Player src={this.state.src} poster={this.state.thumbnail}></Player>
       </div>
     );
   }

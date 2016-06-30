@@ -7,22 +7,24 @@ export default class Player extends Component {
   };
  constructor(props) {
     super(props);
+    this.state={
+      src : '',
+      poster : ''
+    }
  }
-  getInitialState(){
-    return {
-      src: ''
-    };
-  }
-  componentWillReceiveProps(){
+
+  componentWillReceiveProps(newProps){
     this.setState({
-      src: this.props.src
+      src : newProps.src,
+      poster : newProps.poster
     });
   }
 
   render() {
     return (
       <div>
-        <video controls autoPlay webkitAllowFullScreen mozallowfullscreen allowFullScreen src={this.state.src}>
+        <video controls autoPlay webkitAllowFullScreen mozallowfullscreen allowFullScreen src={this.state.src} poster={this.state.poster}>
+          Your browser does not support the video tag (HTML5). Download Google Chrome
         </video>
       </div>
     );
