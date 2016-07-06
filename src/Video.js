@@ -23,7 +23,7 @@ export default class Player extends Component {
   render() {
     return (
       <div>
-        <video controls autoPlay webkitAllowFullScreen mozallowfullscreen allowFullScreen src={this.state.src} poster={this.state.poster}>
+        <video controls autoPlay allowFullScreen src={this.state.src} poster={this.state.poster}>
           Your browser does not support the video tag (HTML5). Download Google Chrome
         </video>
       </div>
