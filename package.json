@@ -40,8 +40,8 @@
   "dependencies": {
     "material-ui": "^0.15.1",
     "query-string": "^4.2.2",
-    "react": ">15.0.0",
-    "react-dom": ">15.0.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
     "react-tap-event-plugin": ">=1.0.0",
     "whatwg-fetch": "^1.0.0"
   }

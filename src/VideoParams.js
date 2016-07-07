@@ -33,15 +33,16 @@ export default class VideoParams extends Component {
         var extraIpt;
         if (this.state.videoMode === 'vod') {
             extraIpt =
-                <TextField
+                    <TextField
                         defaultValue={this.state.videoId}
                         floatingLabelText="Video ID"
                         floatingLabelFixed={true}
                         onChange={this.videoChange.bind(this) }
-                />
+                    />
         }
         
         return (
+
             <div>
                     <TextField
                         defaultValue={this.state.accountId}
@@ -49,12 +50,14 @@ export default class VideoParams extends Component {
                         floatingLabelFixed={true}
                         onChange={this.accountChange.bind(this) }
                     />
+                    <br/>
                     <TextField
                         defaultValue={this.state.eventId}
                         floatingLabelText="Event Name"
                         floatingLabelFixed={true}
                         onChange={this.eventChange.bind(this) }
                     />
+                    <br/>                    
                     {extraIpt}
             </div>
         );

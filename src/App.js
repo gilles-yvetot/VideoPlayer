@@ -5,6 +5,9 @@ import Switch from './Switch'
 import 'whatwg-fetch'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
+
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -59,11 +62,15 @@ export default class App extends Component {
 
     return (
       <MuiThemeProvider>
-        <div>
-          <Switch afterChange={this.onSwitchChange.bind(this) }></Switch>
-          <VideoParams afterEdit={this.listPlaylist.bind(this) } videoMode={this.state.videoMode}></VideoParams>
+        <Paper zDepth={2} style={{
+            padding:20, 
+            display: 'inline-block',
+          }}>
+          <Switch afterChange={this.onSwitchChange.bind(this) }/>
+          <Divider />
+          <VideoParams afterEdit={this.listPlaylist.bind(this) } videoMode={this.state.videoMode}/>
           <Video src={this.state.src} poster={this.state.thumbnail}></Video>
-        </div>
+        </Paper>
       </MuiThemeProvider>
     );
   }
