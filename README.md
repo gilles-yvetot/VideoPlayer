@@ -1,10 +1,10 @@
 # VideoPlayer
-Simple Video Player to broadcast a video from LiveStream API
+Simple Video Player to broadcast a video from LiveStream API.
 
 ### React
 I wanted this assignment to be fun and instructive for me as well, so I jumped into React to start building component-based web app using ES2015. 
 I think Angular 2 is a pretty solid framework as well but it would have taken too much time to learn the Typescript language and a new framework, that's why I opted for React.
-I also think that React will become way more popular and used than Angular 2. 
+I also think that React will become way more popular and used than Angular 2. I also tried to use ES6 (ES2015) features like string templating, the arrows syntax, the class definition...
 
 ### Requirement
 - Node

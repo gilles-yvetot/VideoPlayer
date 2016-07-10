@@ -1,7 +1,7 @@
 {
   "name": "video-player",
   "version": "1.0.0",
-  "description": "Simple Video Player to broadcast a video from LiveStream API",
+  "description": "Simple Video Player to broadcast videos from LiveStream",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",

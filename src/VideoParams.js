@@ -8,7 +8,7 @@ export default class VideoParams extends Component {
             accountId: 1818635,
             eventId: 4577843,
             videoId: 106713251,
-            videoMode: 'vod'
+            playBackMode: 'vod'
         }
     }
 
@@ -24,14 +24,14 @@ export default class VideoParams extends Component {
 
     componentWillReceiveProps(newProps) {
         this.setState({
-            videoMode: newProps.videoMode
+            playBackMode: newProps.playBackMode
         });
     }
 
     render() {
-
+       
         var extraIpt;
-        if (this.state.videoMode === 'vod') {
+        if (this.state.playBackMode === 'vod') {
             extraIpt =
                     <TextField
                         defaultValue={this.state.videoId}
@@ -43,21 +43,22 @@ export default class VideoParams extends Component {
         
         return (
 
-            <div>
+            <div style={{
+                paddingRight: 15,
+                paddingLeft: 15}}
+            >
                     <TextField
                         defaultValue={this.state.accountId}
                         floatingLabelText="Account Name"
                         floatingLabelFixed={true}
                         onChange={this.accountChange.bind(this) }
                     />
-                    <br/>
                     <TextField
                         defaultValue={this.state.eventId}
                         floatingLabelText="Event Name"
                         floatingLabelFixed={true}
                         onChange={this.eventChange.bind(this) }
                     />
-                    <br/>                    
                     {extraIpt}
             </div>
         );

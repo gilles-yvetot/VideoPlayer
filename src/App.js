@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Video from './Video'
-import VideoParams from './VideoParams'
-import Switch from './Switch'
-import 'whatwg-fetch'
+import Video from './Video';
+import VideoParams from './VideoParams';
+import PlayBackSwitcher from './PlayBackSwitcher';
+import QualitySwitcher from './QualitySwitcher';
+import 'whatwg-fetch';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -18,10 +19,13 @@ export default class App extends Component {
     super(props);
     this.state = {
       src: '',
+      progressive_url: '',
+      progressive_url_hd: '',
       accountId: 1818635,
       eventId: 4577843,
       videoId: 106713251,
-      videoMode: 'vod'
+      playBackMode: 'vod',
+      quality: 'HQ'
     };
     this.listPlaylist();
   }
@@ -31,9 +35,20 @@ export default class App extends Component {
       this.getCall(url, (json) => {
         if (json.progressive_url) {
           this.setState({
-            src: json.progressive_url,
+            progressive_url: json.progressive_url,
+            progressive_url_hd: json.progressive_url_hd,
             thumbnail: json.thumbnail_url
-          })
+          });
+          if (this.state.quality == 'HQ') {
+            this.setState({
+              src: this.state.progressive_url_hd
+            })
+          }
+          else {
+            this.setState({
+              src: this.state.progressive_url
+            })
+          }
         }
       },
         (err) => {
@@ -52,23 +67,50 @@ export default class App extends Component {
       .catch(error)
   }
 
-  onSwitchChange(newVideoMode) {
+  onPlayBackChange(newPlayBackMode) {
     this.setState({
-      videoMode: newVideoMode
+      playBackMode: newPlayBackMode
     });
+  }
+  onQualityChange(newQuality) {
+    this.setState({
+      quality: newQuality
+    });
+    if (newQuality == 'HQ') {
+      this.setState({
+        src: this.state.progressive_url_hd
+      })
+    }
+    else {
+      this.setState({
+        src: this.state.progressive_url
+      })
+    }
   }
 
   render() {
 
+    
+
     return (
       <MuiThemeProvider>
         <Paper zDepth={2} style={{
-            padding:20, 
-            display: 'inline-block',
+          display: 'inline-block',
+        }}>
+          <div style={{
+            backgroundColor: 'rgb(232, 232, 232)',
+            padding: '10px 24px',
+            color: 'rgba(0, 0, 0, 0.4)',
+            fontSize:20,
+            textAlign:'left',
+            marginBottom:10,
           }}>
-          <Switch afterChange={this.onSwitchChange.bind(this) }/>
+            LiveStream Player
+          </div>
+          <PlayBackSwitcher afterChange={this.onPlayBackChange.bind(this) }/>
+          <QualitySwitcher afterChange={this.onQualityChange.bind(this) }/>
           <Divider />
-          <VideoParams afterEdit={this.listPlaylist.bind(this) } videoMode={this.state.videoMode}/>
+          <VideoParams afterEdit={this.listPlaylist.bind(this) } playBackMode={this.state.playBackMode}/>
           <Video src={this.state.src} poster={this.state.thumbnail}></Video>
         </Paper>
       </MuiThemeProvider>

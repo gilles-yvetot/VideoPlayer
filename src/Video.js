@@ -22,7 +22,8 @@ export default class Player extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{paddingRight: 15,
+                paddingLeft: 15}}>
         <video controls autoPlay allowFullScreen src={this.state.src} poster={this.state.poster}>
           Your browser does not support the video tag (HTML5). Download Google Chrome
         </video>
