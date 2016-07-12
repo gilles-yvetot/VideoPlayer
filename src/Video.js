@@ -21,10 +21,18 @@ export default class Player extends Component {
   }
 
   render() {
+    var type=null;
+    if(this.state.src && this.state.src.indexOf('.m3u8')>-1){
+      type = 'application/x-mpegURL';
+    }
+    else if(this.state.src && this.state.src.indexOf('.mp4')>-1){
+      type = 'video/mp4';
+    }
     return (
       <div style={{paddingRight: 15,
                 paddingLeft: 15}}>
-        <video controls autoPlay allowFullScreen src={this.state.src} poster={this.state.poster}>
+        <video controls autoPlay allowFullScreen poster={this.state.poster} preload='metadata'>
+          <source src={this.state.src} type={type} />
           Your browser does not support the video tag (HTML5). Download Google Chrome
         </video>
       </div>

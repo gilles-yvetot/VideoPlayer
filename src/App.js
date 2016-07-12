@@ -19,34 +19,38 @@ export default class App extends Component {
     super(props);
     this.state = {
       src: '',
-      progressive_url: '',
-      progressive_url_hd: '',
-      accountId: 1818635,
-      eventId: 4577843,
-      videoId: 106713251,
+      url: '',
+      url_hd: '',
       playBackMode: 'vod',
       quality: 'HQ'
     };
-    this.listPlaylist();
   }
-  listPlaylist() {
-    if (this.state.accountId && this.state.eventId && this.state.eventId) {
-      let url = `http://api.new.livestream.com/accounts/${this.state.accountId}/events/${this.state.eventId}/videos/${this.state.videoId}`;
-      this.getCall(url, (json) => {
-        if (json.progressive_url) {
+  listPlaylist(accountId,eventId,videoId) {
+
+    let url='';
+    if (this.state.playBackMode == 'vod' && accountId && eventId && videoId ) {
+      url = `http://api.new.livestream.com/accounts/${accountId}/events/${eventId}/videos/${videoId}`;
+    }
+    else if(this.state.playBackMode == 'live' && accountId && eventId){
+      url = `http://api.new.livestream.com/accounts/${accountId}/events/${eventId}/stream_info`;
+    }
+
+    if(url){
+      this.httpGet(url, (json) => {
+        if (json.progressive_url || json.m3u8_url) {
           this.setState({
-            progressive_url: json.progressive_url,
-            progressive_url_hd: json.progressive_url_hd,
+            url: json.progressive_url || json.m3u8_url,
+            url_hd: json.progressive_url_hd,
             thumbnail: json.thumbnail_url
           });
-          if (this.state.quality == 'HQ') {
+          if (this.state.quality == 'LQ' || this.state.playBackMode == 'live') {
             this.setState({
-              src: this.state.progressive_url_hd
+              src: this.state.url
             })
           }
           else {
             this.setState({
-              src: this.state.progressive_url
+              src: this.state.url_hd
             })
           }
         }
@@ -56,7 +60,7 @@ export default class App extends Component {
         })
     }
   }
-  getCall(url, success, error) {
+  httpGet(url, success, error) {
     var self = this;
 
     fetch(url)
@@ -90,7 +94,11 @@ export default class App extends Component {
 
   render() {
 
-    
+    var qltSwtchr;
+        if (this.state.playBackMode === 'vod') {
+            qltSwtchr =
+                    <QualitySwitcher afterChange={this.onQualityChange.bind(this) }/>
+        }
 
     return (
       <MuiThemeProvider>
@@ -108,9 +116,9 @@ export default class App extends Component {
             LiveStream Player
           </div>
           <PlayBackSwitcher afterChange={this.onPlayBackChange.bind(this) }/>
-          <QualitySwitcher afterChange={this.onQualityChange.bind(this) }/>
+          {qltSwtchr}
           <Divider />
-          <VideoParams afterEdit={this.listPlaylist.bind(this) } playBackMode={this.state.playBackMode}/>
+          <VideoParams afterChange={this.listPlaylist.bind(this) } playBackMode={this.state.playBackMode}/>
           <Video src={this.state.src} poster={this.state.thumbnail}></Video>
         </Paper>
       </MuiThemeProvider>
